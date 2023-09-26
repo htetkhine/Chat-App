@@ -19,7 +19,8 @@
               <input type="password" class="form-control" v-model="password">
             </div>
             <button class="btn btn-success mt-4">Submit</button>
-          </form>        
+          </form> 
+          <p class="text-danger">{{ error }}</p>       
         </div>
       </div>
     </div>
@@ -27,15 +28,22 @@
   
   <script setup>
     import { ref } from 'vue'; 
-    import {  createUserWithEmailAndPassword } from 'firebase/auth';
-
+    import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';    
+    import { appAuth } from '@/firebase/config';
     let displayName = ref('');
     let email = ref('');
     let password = ref('');
+    let error = ref(null);
   
     let signup=async()=>{
-      let res = await createUserWithEmailAndPassword(email.value,password.value)
-      console.log(res.user);
+      try{
+        let res = await createUserWithEmailAndPassword(appAuth, email.value,password.value)
+        if(!res){
+          throw new Error('Could not crete new user!');
+        }
+      }catch(err){
+        error.value = err.message;
+      }      
     }
   </script>
   
