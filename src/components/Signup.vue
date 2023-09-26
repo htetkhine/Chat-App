@@ -39,10 +39,10 @@
       try{
         let res = await createUserWithEmailAndPassword(appAuth, email.value,password.value)
         if(!res){
-          throw new Error('Could not crete new user!');
+          throw new Error('Could not crete new user!');          
         }
       }catch(err){
-        error.value = err.message;
+        console.log(err.message);
       }      
     }
   </script>
