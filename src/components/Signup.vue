@@ -28,22 +28,15 @@
   
   <script setup>
     import { ref } from 'vue'; 
-    import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';    
-    import { appAuth } from '@/firebase/config';
+    import userSignUp from '../composables/singup';
+
     let displayName = ref('');
     let email = ref('');
     let password = ref('');
-    let error = ref(null);
   
+    let {error,createAccount} = userSignUp();
     let signup=async()=>{
-      try{
-        let res = await createUserWithEmailAndPassword(appAuth, email.value,password.value)
-        if(!res){
-          throw new Error('Could not crete new user!');          
-        }
-      }catch(err){
-        console.log(err.message);
-      }      
+      let res = await createAccount(email.value,password.value,displayName.value,);
     }
   </script>
   

@@ -22,12 +22,21 @@
   </template>
   
   <script setup>
-   import { ref } from 'vue'; 
+   import { reactive, ref } from 'vue'; 
+    let url = 'http://localhost:8000/';
+    let loginHost = url+'api/login';
+
     let email = ref('');
     let password = ref('');
   
-    let login=()=>{
-        console.log(email.value,password.value)
+    let login=async()=>{
+        let formData = reactive(this);
+        console.log(formData);
+        // const { data, pending, error, refresh } = await useFetch('loginHost',{
+        //   method : "POST",
+        //   body : formData
+        // })
+        // console.log(email.value,password.value)
     }
   </script>
   
