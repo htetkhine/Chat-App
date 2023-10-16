@@ -9,10 +9,10 @@ let createAccount = async(email,password,displayName)=>{
         if(!res){
           throw new Error('Could not create new user!');          
         }
-        res.user.displayName({displayName});
+        await res.user.updateProfile({displayName});
         return res;
       }catch(err){
-        error.value = err.messsage;
+        error.value = err.message;
       }  
 }
 let userSignUp = ()=>{

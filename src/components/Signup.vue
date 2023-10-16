@@ -20,7 +20,7 @@
             </div>
             <button class="btn btn-success mt-4">Submit</button>
           </form> 
-          <p class="text-danger">{{ error }}</p>       
+          <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>       
         </div>
       </div>
     </div>
@@ -30,13 +30,19 @@
     import { ref } from 'vue'; 
     import userSignUp from '../composables/singup';
 
-    let displayName = ref('');
-    let email = ref('');
-    let password = ref('');
-  
+    let displayName = ref(null);
+    let email = ref(null);
+    let password = ref(null);
+    let errorMessage = ref(null);
     let {error,createAccount} = userSignUp();
     let signup=async()=>{
       let res = await createAccount(email.value,password.value,displayName.value,);
+      if(res){
+        console.log(res.user)
+      }else{
+        let removeText = error.value.replace('Firebase:','')
+        errorMessage.value = removeText
+      }
     }
   </script>
   

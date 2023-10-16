@@ -15,29 +15,32 @@
               <input type="password" class="form-control" v-model="password">
             </div>
             <button class="btn btn-success mt-4">Submit</button>
-          </form>        
+          </form>
+          <p class="text-danger" v-if="errorMessage">
+            {{ errorMessage }}
+          </p>        
         </div>
       </div>
     </div>
   </template>
   
   <script setup>
-   import { reactive, ref } from 'vue'; 
-    let url = 'http://localhost:8000/';
-    let loginHost = url+'api/login';
+    import {ref } from 'vue'; 
+    import getSignInUser from '../composables/login'
 
-    let email = ref('');
-    let password = ref('');
-  
+    let email = ref(null);
+    let password = ref(null);
+    let errorMessage = ref(null);
+    let {error,signInUser} = getSignInUser();
     let login=async()=>{
-        let formData = reactive(this);
-        console.log(formData);
-        // const { data, pending, error, refresh } = await useFetch('loginHost',{
-        //   method : "POST",
-        //   body : formData
-        // })
-        // console.log(email.value,password.value)
-    }
+        let res = await signInUser(email.value,password.value)
+        if(res){
+          console.log(res.user);
+        }else{
+          let removeText = error.value.replace('Firebase:','')
+          errorMessage.value = removeText
+        }
+      }         
   </script>
   
   <style lang="scss" scoped>

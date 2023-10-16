@@ -3,7 +3,6 @@
     <div v-if="showLoginForm">
       <Login />
       <p>Not member? <span @click="showLoginForm = !showLoginForm">Create account</span></p>
-      <EmiVue />
     </div>
     <div v-else>
       <Signup />
@@ -15,7 +14,6 @@
 <script setup>
   import Signup from '@/components/Signup.vue';
   import Login from '@/components/Login.vue';
-  import EmiVue from '@/components/Emi.vue';
   import { ref } from 'vue';
 
   let showLoginForm = ref(true);
